@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_function_type_syntax_for_parameters
 
 import 'package:flutter/material.dart';
+import 'package:quick_shop/utils/routes.dart';
 
 class WellCome extends StatefulWidget {
   const WellCome({Key? key}) : super(key: key);
@@ -12,77 +13,94 @@ class WellCome extends StatefulWidget {
 class _WellComeState extends State<WellCome>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
-  late Animation padA;
-  late Animation padB;
-  
+  // late Animation padA;
+
   @override
   void initState() {
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds: 2),
     );
-    controller.forward();
-    padA = Tween(begin: 0.0, end: 95.0).animate(controller);
-    padB = Tween(begin: 180.0, end: 0.0).animate(controller);
+    WidgetsBinding.instance
+        ?.addPostFrameCallback((timeStamp) => loopOnce(context));
   }
+  
 
+  Future<void> loopOnce(BuildContext context) async {
+    await controller.forward();
+    await Future.delayed(Duration(seconds: 1));
+    Navigator.of(context).pushNamed(MyRoutes.loginroutes);
+  }
   @override
   void dispose() {
     super.dispose();
     controller.dispose();
   }
-  // Future<void> loopOnce(BuildContext context) async {
-  //   await controller.forward();
-  //   await Future.delayed(Duration(seconds: 1));
-  // }
+
+  BoxDecoration radius() {
+    return BoxDecoration(
+        color: Colors.red, borderRadius: BorderRadius.circular(10));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.white,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          AnimatedContainer(
-            duration: Duration(seconds: 2),
-            //width: SizeChange.value,
+          SizedBox(
             height: 280,
-            //color: Colors.blue,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 78,
-                ),
-                Container(
-                  width: 20,
-                  height: 3,
-                  color: Colors.red,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Container(
-                    width: 170,
+            padding: const EdgeInsets.symmetric(
+              vertical: 16,
+            ),
+            child: TweenAnimationBuilder(
+              child: Row(
+                children: [
+                  Container(
+                    width: 20,
                     height: 3,
-                    color: Colors.red,
+                    decoration: radius(),
                   ),
-                ),
-                Container(
-                  width: 20,
-                  height: 3,
-                  color: Colors.red,
-                )
-              ],
+                  TweenAnimationBuilder(
+                    child: Container(
+                      width: 170,
+                      height: 3,
+                      decoration: radius(),
+                    ),
+                    duration: Duration(seconds: 1),
+                    tween: Tween<double>(begin: 48, end: 12),
+                    builder: (BuildContext context, double _val, child) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(horizontal: _val),
+                        child: child,
+                      );
+                    },
+                  ),
+                  Container(
+                    width: 20,
+                    height: 3,
+                    decoration: radius(),
+                  )
+                ],
+              ),
+              duration: Duration(seconds: 1),
+              tween: Tween<double>(begin: 50, end: 88),
+              builder: (BuildContext context, double _val, child) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: _val),
+                  child: child,
+                );
+              },
             ),
           ),
           Row(
             children: [
-              Padding(
-                padding: EdgeInsets.only(left: padA.value),
-                child: AnimatedContainer(
-                  duration: Duration(seconds: 2),
+              TweenAnimationBuilder(
+                child: Container(
                   width: 110,
                   height: 45,
                   decoration: BoxDecoration(
@@ -103,16 +121,22 @@ class _WellComeState extends State<WellCome>
                     ),
                   ),
                 ),
+                duration: Duration(seconds: 1),
+                tween: Tween<double>(begin: 0, end: 95),
+                builder: (BuildContext context, double _val, child) {
+                  return Padding(
+                    padding: EdgeInsets.only(left: _val),
+                    child: child,
+                  );
+                },
               ),
-              Padding(
-                padding: EdgeInsets.only(left: padB.value),
-                child: AnimatedContainer(
-                  duration: Duration(seconds: 2),
+              TweenAnimationBuilder(
+                child: Container(
                   width: 110,
                   height: 45,
                   alignment: Alignment(100, 500),
                   decoration: BoxDecoration(
-                    //color: Colors.white,
+                    color: Colors.white,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(25),
                       bottomRight: Radius.circular(25),
@@ -122,16 +146,95 @@ class _WellComeState extends State<WellCome>
                     child: Text(
                       "SHOP",
                       style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
+                          color: Colors.red[600],
+                          fontSize: 25,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 3),
                     ),
                   ),
                 ),
+                duration: Duration(seconds: 1),
+                tween: Tween<double>(begin: 180, end: 25),
+                builder: (BuildContext context, double _val, child) {
+                  return Padding(
+                    padding: EdgeInsets.only(left: _val),
+                    child: child,
+                  );
+                },
               ),
             ],
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 16,
+            ),
+            child: TweenAnimationBuilder(
+              child: Row(
+                children: [
+                  Container(
+                    width: 20,
+                    height: 3,
+                    decoration: radius(),
+                  ),
+                  TweenAnimationBuilder(
+                    child: Container(
+                      width: 170,
+                      height: 3,
+                      decoration: radius(),
+                    ),
+                    duration: Duration(seconds: 1),
+                    tween: Tween<double>(begin: 48, end: 12),
+                    builder: (BuildContext context, double _val, child) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(horizontal: _val),
+                        child: child,
+                      );
+                    },
+                  ),
+                  Container(
+                    width: 20,
+                    height: 3,
+                    decoration: radius(),
+                  )
+                ],
+              ),
+              duration: Duration(seconds: 1),
+              tween: Tween<double>(begin: 50, end: 88),
+              builder: (BuildContext context, double _val, child) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: _val),
+                  child: child,
+                );
+              },
+            ),
+          ),
+          Center(
+              child: TweenAnimationBuilder(
+            child: Text(
+              "Online Shoping Store",
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            duration: Duration(seconds: 1),
+            tween: Tween(begin: 0.0, end: 1.0),
+            builder: (BuildContext context, double _val, child) {
+              return Opacity(
+                opacity: _val,
+                child: child,
+              );
+            },
+          )),
+          SizedBox(
+            height: 350,
+          ),
+          Center(
+            child: Text(
+              "Make In India",
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            ),
+          )
         ],
       ),
     );
