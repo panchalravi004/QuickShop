@@ -64,7 +64,7 @@ class _WellComeState extends State<WellCome>
                     child: Container(
                       width: 170,
                       height: 3,
-                      color: Colors.red,
+                      decoration: lineDecor(),
                     ),
                     duration: Duration(seconds: 1),
                     tween: Tween<double>(begin: 72, end: 10),
@@ -153,7 +153,7 @@ class _WellComeState extends State<WellCome>
                     child: Container(
                       width: 170,
                       height: 3,
-                      color: Colors.red,
+                      decoration: lineDecor(), 
                     ),
                     duration: Duration(seconds: 1),
                     tween: Tween<double>(begin: 72, end: 10),

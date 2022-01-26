@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:quick_shop/pages/login_page.dart';
-import 'package:quick_shop/pages/wellcome.dart';
+//import 'package:quick_shop/pages/wellcome.dart';
 import 'package:quick_shop/utils/routes.dart';
 
 void main(List<String> args) {
-  runApp(QuickShop());
+  runApp(const QuickShop());
 }
 class QuickShop extends StatelessWidget {
   const QuickShop({ Key? key }) : super(key: key);
@@ -16,10 +16,10 @@ class QuickShop extends StatelessWidget {
       darkTheme: ThemeData.light(),
 
       debugShowCheckedModeBanner: false,
-      initialRoute:"/",
-      routes: {
-        "/" : (context) => const WellCome(),
-        MyRoutes.loginroutes : (context) => LoginPage()
+      initialRoute:MyRoutes.loginroutes,
+      routes: { 
+        //"/" : (context) => const WellCome(),
+        MyRoutes.loginroutes : (context) => const LoginPage()
       },
     );
   }
