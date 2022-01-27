@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_new, unused_field, prefer_const_literals_to_create_immutables
 
+
 import 'package:flutter/material.dart';
 import 'package:quick_shop/pages/signin.dart';
 import 'package:quick_shop/pages/signup.dart';
+import 'package:quick_shop/utils/routes.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -158,11 +160,18 @@ class _LoginPageState extends State<LoginPage> {
                       bottomLeft: Radius.circular(20),
                     )),
                 child: Center(
-                  child: Text("Skip",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600)),
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        Navigator.pushReplacementNamed(context, MyRoutes.homeroutes);
+                      });
+                    },
+                    child: Text("Skip",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600)),
+                  ),
                 ),
               ),
             ),
