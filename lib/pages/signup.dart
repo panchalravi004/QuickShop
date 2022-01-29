@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, avoid_print, non_constant_identifier_names
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, avoid_print, non_constant_identifier_names, unused_local_variable, invalid_return_type_for_catch_error
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -53,14 +54,29 @@ class _SignUpState extends State<SignUp> {
         );
       },
     );
-  } 
+  }
 
-//addding student
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
-  Future<void> addUser() { 
-    return users
-        .doc(mobile)
-        .set({
+//Register User
+//addding student in firestore database like this   -----doc(email)----- for custom document name
+//CollectionReference users = FirebaseFirestore.instance.collection('users');
+  Future<void> addUser() async {
+    if (pwd == cpwd) {
+      try {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        );
+        final currentuser = (await FirebaseAuth.instance
+                .createUserWithEmailAndPassword(email: email, password: pwd))
+            .user;
+        FirebaseFirestore.instance
+            .collection("users")
+            .doc(currentuser!.uid)
+            .set({
           'fname': fname,
           'lname': lname,
           'email': email,
@@ -68,12 +84,20 @@ class _SignUpState extends State<SignUp> {
           'pwd': pwd,
           'cpwd': cpwd,
           'pin': pin,
-          'reffer':reffer
+          'reffer': reffer
+        }).then((value) {
+          Navigator.of(context).pop();
+          msg(msgs);
         })
-        .then((value) => msg(msgs))
         .catchError((error) => msg(err + " $error"));
+        }
+        catch (e) {
+          print(e);
+        }
+    }
   }
 
+//clear all field
   clearText() {
     fnamecontrol.clear();
     lnamecontrol.clear();

@@ -28,7 +28,7 @@ class QuickShop extends StatelessWidget {
             theme: ThemeData.light(),
             darkTheme: ThemeData.light(),
             debugShowCheckedModeBanner: false,
-            initialRoute: MyRoutes.loginroutes,
+            initialRoute: MyRoutes.loginroutes, 
             routes: {
               //"/" : (context) => const WellCome(),
               MyRoutes.loginroutes: (context) => const LoginPage(),
