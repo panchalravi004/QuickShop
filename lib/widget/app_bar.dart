@@ -17,6 +17,8 @@ class _MyAppBarState extends State<MyAppBar> {
 
   Color c1 = Color(0xFF7E57C2);
   Color c2 = Color(0xFF29B6F6);
+  Color c3 = Color.fromARGB(255, 189, 173, 252);
+  Color c4 = Color.fromARGB(255, 0, 229, 255);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class _MyAppBarState extends State<MyAppBar> {
             bottomRight: Radius.circular(15),
           ),
           gradient: LinearGradient(
-              colors: [c1, c2],
+              colors: [c3, c4],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight),
         ),
