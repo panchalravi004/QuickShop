@@ -2,7 +2,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:quick_shop/pages/login_page.dart';
 import 'package:quick_shop/utils/routes.dart';
 
 class WithOutLogin extends StatefulWidget {
@@ -17,14 +16,19 @@ class _WithOutLoginState extends State<WithOutLogin> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ListTile(
-          leading: Icon(
-            CupertinoIcons.home,
-            color: Colors.black,
-            size: 20,
+        InkWell(
+          onTap: () {
+            Scaffold.of(context).openEndDrawer();
+          },
+          child: ListTile(
+            leading: Icon(
+              CupertinoIcons.home,
+              color: Colors.black,
+              size: 20,
+            ),
+            title: Text("Home",
+                textScaleFactor: 1.1, style: TextStyle(color: Colors.black)),
           ),
-          title: Text("Home",
-              textScaleFactor: 1.1, style: TextStyle(color: Colors.black)),
         ),
         ListTile(
           leading: Icon(
