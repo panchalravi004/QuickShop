@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_new, unused_field, prefer_const_literals_to_create_immutables
 
-
 import 'package:flutter/material.dart';
 import 'package:quick_shop/pages/signin.dart';
 import 'package:quick_shop/pages/signup.dart';
@@ -150,22 +149,24 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 332),
-              child: Container(
-                width: 80,
-                height: 35,
-                decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      bottomLeft: Radius.circular(20),
-                    )),
-                child: Center(
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        Navigator.pushReplacementNamed(context, MyRoutes.homeroutes);
-                      });
-                    },
+              child: InkWell(
+                onTap: () {
+                  setState(() async {
+                    await Future.delayed(Duration(seconds: 1));
+                    Navigator.pushReplacementNamed(
+                        context, MyRoutes.homeroutes);
+                  });
+                },
+                child: Container(
+                  width: 80,
+                  height: 35,
+                  decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        bottomLeft: Radius.circular(20),
+                      )),
+                  child: Center(
                     child: Text("Skip",
                         style: TextStyle(
                             color: Colors.white,
@@ -187,12 +188,12 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Text(
                   "Terms and conditions ",
-                  style: TextStyle(color: Colors.red,fontSize: 13),
+                  style: TextStyle(color: Colors.red, fontSize: 13),
                 ),
                 Text(" and "),
                 Text(
                   " Legal Policy",
-                  style: TextStyle(color: Colors.red,fontSize: 13),
+                  style: TextStyle(color: Colors.red, fontSize: 13),
                 ),
               ],
             ),
