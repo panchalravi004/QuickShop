@@ -1,10 +1,12 @@
-// ignore_for_file: prefer_const_constructors, avoid_types_as_parameter_names, non_constant_identifier_names, avoid_print, prefer_const_literals_to_create_immutables, unused_local_variable
+// ignore_for_file: prefer_const_constructors, avoid_types_as_parameter_names, non_constant_identifier_names, avoid_print, prefer_const_literals_to_create_immutables, unused_local_variable, unused_field
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_shop/utils/routes.dart';
 
 class SignIn extends StatefulWidget {
+  static late bool userlogin = false;
+
   const SignIn({Key? key}) : super(key: key);
 
   @override
@@ -18,6 +20,7 @@ class _SignInState extends State<SignIn> {
 
   static var email = "";
   var pwd = "";
+  // bool userlogin = false;
 
 //LOGIN USERS
   Future<void> signin() async {
@@ -33,9 +36,28 @@ class _SignInState extends State<SignIn> {
         );
         final currentuser = (await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: pwd));
+        SignIn.userlogin = true;
         Navigator.of(context).pop();
         Navigator.of(context).pushReplacementNamed(MyRoutes.homeroutes);
       } catch (e) {
+        Navigator.of(context).pop();
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Something Wrong"),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[Text(e.toString())],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                    onPressed: () => Navigator.of(context).pop(), child: Text("OK"))
+              ],
+            );
+          },
+        );
         print(e);
       }
     }
@@ -74,7 +96,7 @@ class _SignInState extends State<SignIn> {
               padding: const EdgeInsets.symmetric(vertical: 48),
               child: TextFormField(
                 controller: pwdcontrol,
-                obscureText:true,
+                obscureText: true,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: "Enter Your Password",

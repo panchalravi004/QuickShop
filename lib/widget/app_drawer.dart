@@ -2,6 +2,7 @@
 
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:quick_shop/pages/signin.dart';
 import 'package:quick_shop/widget/drawer/when_login.dart';
 import 'package:quick_shop/widget/drawer/without_login.dart';
 
@@ -15,6 +16,9 @@ class MyAppDrawer extends StatefulWidget {
 class _MyAppDrawerState extends State<MyAppDrawer> {
   Color c2 = Color.fromARGB(255, 189, 173, 252);
   Color c1 = Color.fromARGB(255, 0, 229, 255);
+
+  bool userlogin = SignIn.userlogin;
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -80,7 +84,7 @@ class _MyAppDrawerState extends State<MyAppDrawer> {
             scrollDirection: Axis.vertical,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: WithOutLogin(),
+              child: userlogin? WhenLogin(): WithOutLogin(),
             ),
           )
         ],
