@@ -15,7 +15,7 @@ class MyAppDrawer extends StatefulWidget {
   _MyAppDrawerState createState() => _MyAppDrawerState();
 }
 
-class _MyAppDrawerState extends State<MyAppDrawer>{
+class _MyAppDrawerState extends State<MyAppDrawer> {
   Color c2 = Color.fromARGB(255, 189, 173, 252);
   Color c1 = Color.fromARGB(255, 0, 229, 255);
 
@@ -24,7 +24,7 @@ class _MyAppDrawerState extends State<MyAppDrawer>{
   static String subtitle = "Please Login To Know More";
   String username = "";
   String useremail = "";
-  
+
   //for username
   String showusername() {
     var user = FirebaseAuth.instance.currentUser;
@@ -40,7 +40,7 @@ class _MyAppDrawerState extends State<MyAppDrawer>{
     return username;
   }
 
-  //for user email
+  // //for user email
   String showuseremail() {
     var user = FirebaseAuth.instance.currentUser;
     FirebaseFirestore.instance
@@ -84,7 +84,7 @@ class _MyAppDrawerState extends State<MyAppDrawer>{
                   children: [
                     ListTile(
                       title: Text(
-                        userlogin ? showusername().toUpperCase() : title,
+                        userlogin ? showusername().toUpperCase(): title,
                         style: TextStyle(
                             fontSize: 18,
                             color: Colors.white,
@@ -104,6 +104,10 @@ class _MyAppDrawerState extends State<MyAppDrawer>{
                               width: 3,
                             ),
                             borderRadius: BorderRadius.circular(50)),
+                        // child: CircleAvatar(
+                        //   backgroundColor: Colors.transparent,
+                        //   backgroundImage: NetworkImage(''),
+                        // ),
                       ),
                     ),
                     Container(

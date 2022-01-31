@@ -54,14 +54,19 @@ class _WhenLoginState extends State<WhenLogin> {
                 textScaleFactor: 1.1, style: TextStyle(color: Colors.black)),
           ),
         ),
-        ListTile(
-          leading: Icon(
-            CupertinoIcons.person_fill,
-            color: Colors.black,
-            size: 20,
+        InkWell(
+          onTap: () {
+            Navigator.of(context).pushNamed(MyRoutes.profileroutes);
+          },
+          child: ListTile(
+            leading: Icon(
+              CupertinoIcons.person_fill,
+              color: Colors.black,
+              size: 20,
+            ),
+            title: Text("Profile",
+                textScaleFactor: 1.1, style: TextStyle(color: Colors.red)),
           ),
-          title: Text("Profile",
-              textScaleFactor: 1.1, style: TextStyle(color: Colors.red)),
         ),
         ListTile(
           leading: Icon(
