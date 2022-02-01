@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:quick_shop/utils/routes.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -30,7 +31,7 @@ class _UserProfileState extends State<UserProfile> {
                   bottomLeft: Radius.circular(25),
                   bottomRight: Radius.circular(25)),
               gradient: LinearGradient(
-                  colors: [c1,c2],
+                  colors: [c1, c2],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight)),
         ),
@@ -73,14 +74,14 @@ class _UserProfileState extends State<UserProfile> {
                             colors: [c2, Colors.blue],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black12,
-                                offset: Offset(0, 0),
-                                blurRadius: 10,
-                                spreadRadius: 0,
-                              )
-                            ],
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            offset: Offset(0, 0),
+                            blurRadius: 10,
+                            spreadRadius: 0,
+                          )
+                        ],
                         border: Border.all(color: Colors.white, width: 2),
                         borderRadius: BorderRadius.circular(50)),
                   ),
@@ -304,22 +305,30 @@ class _UserProfileState extends State<UserProfile> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      width: 100,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [Colors.amberAccent, Colors.lightGreen],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight),
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Center(
-                        child: Text(
-                          "Edit",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 18),
+                    InkWell(
+                      onTap: (){
+                        setState((){  
+                          Navigator.of(context)
+                              .pushNamed(MyRoutes.updateprofileroutes);
+                        });
+                      },
+                      child: Container(
+                        width: 100,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [Colors.amberAccent, Colors.lightGreen],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight),
+                            borderRadius: BorderRadius.circular(30)),
+                        child: Center(
+                          child: Text(
+                            "Update",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18),
+                          ),
                         ),
                       ),
                     )
