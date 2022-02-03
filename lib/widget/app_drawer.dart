@@ -25,35 +25,22 @@ class _MyAppDrawerState extends State<MyAppDrawer> {
   String username = "";
   String useremail = "";
 
-  //for username
-  String showusername() {
-    var user = FirebaseAuth.instance.currentUser;
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(user!.uid)
-        .get()
-        .then((data) {
-      setState(() {
-        username = data['fname'].toString() + " " + data['lname'].toString();
-      });
-    });
-    return username;
-  }
+  var user = FirebaseAuth.instance.currentUser;
 
   // //for user email
-  String showuseremail() {
-    var user = FirebaseAuth.instance.currentUser;
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(user!.uid)
-        .get()
-        .then((data) {
-      setState(() {
-        useremail = data['email'].toString();
-      });
-    });
-    return useremail;
-  }
+  // String showuseremail() {
+  //   var user = FirebaseAuth.instance.currentUser;
+  //   FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(user!.uid)
+  //       .get()
+  //       .then((data) {
+  //     setState(() {
+  //       useremail = data['email'].toString();
+  //     });
+  //   });
+  //   return useremail;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -83,17 +70,42 @@ class _MyAppDrawerState extends State<MyAppDrawer> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ListTile(
-                      title: Text(
-                        userlogin ? showusername().toUpperCase(): title,
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            ),
-                      ),
-                      subtitle: Text(
-                        userlogin ? showuseremail() : subtitle,
-                        style: TextStyle(color: Colors.white),
-                      ),
+                      title: userlogin ? StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(user!.uid)
+                              .snapshots(),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (!snapshot.hasData) {
+                              return LinearProgressIndicator();
+                            }
+                            return Text((snapshot.data['fname'] +
+                                    ' ' +
+                                    snapshot.data['lname'])
+                                .toString()
+                                .toUpperCase(),
+                                style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                  ),
+                                );
+                          },
+                          ):Text(title,style: TextStyle(fontSize: 18,color: Colors.white,)
+                        ),
+                      subtitle: userlogin ? StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(user!.uid)
+                              .snapshots(),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (!snapshot.hasData) {
+                              return LinearProgressIndicator();
+                            }
+                            return Text(snapshot.data['email'],style: TextStyle(color: Colors.white,));
+                          },
+                        ):Text(subtitle,style: TextStyle(color: Colors.white,)),
                       trailing: Container(
                         width: 60,
                         height: 60,
@@ -104,10 +116,22 @@ class _MyAppDrawerState extends State<MyAppDrawer> {
                               width: 3,
                             ),
                             borderRadius: BorderRadius.circular(50)),
-                        // child: CircleAvatar(
-                        //   backgroundColor: Colors.transparent,
-                        //   backgroundImage: NetworkImage(''),
-                        // ),
+                        child: userlogin ? StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(user!.uid)
+                              .snapshots(),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                                if (!snapshot.hasData) {
+                                  return CircleAvatar(backgroundColor: Colors.transparent,);
+                                }
+                                return CircleAvatar(
+                                      backgroundColor: Colors.transparent,
+                                      backgroundImage: NetworkImage(snapshot.data['profileimg']),
+                                    );
+                                },
+                          ): CircleAvatar(backgroundColor: Colors.transparent,),
                       ),
                     ),
                     Container(

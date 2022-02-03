@@ -39,6 +39,8 @@ dependencies:
   firebase_auth: "^3.0.1"
   firebase_auth_web: ^3.3.7
   image_picker: ^0.8.4+5
+  firebase_storage: ^10.2.6
+  firebase_storage_web: ^3.2.7
 
 dev_dependencies:
   flutter_test:

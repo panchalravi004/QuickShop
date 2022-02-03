@@ -82,9 +82,9 @@ class _SignUpState extends State<SignUp> {
           'email': email,
           'mobile': mobile,
           'pwd': pwd,
-          'cpwd': cpwd,
           'pin': pin,
-          'reffer': reffer
+          'reffer': reffer,
+          'profileimg':""
         }).then((value) {
           Navigator.of(context).pop();
           msg(msgs);

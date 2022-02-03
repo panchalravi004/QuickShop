@@ -1,9 +1,10 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables, unused_label, avoid_web_libraries_in_flutter, unused_local_variable, deprecated_member_use
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables, unused_label, avoid_web_libraries_in_flutter, unused_local_variable, deprecated_member_use, unused_field, avoid_print, non_constant_identifier_names
 
-import 'dart:html';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -51,13 +52,102 @@ class _UpdateProfileState extends State<UpdateProfile> {
   }
 
   //Select image from gallery
-  late File image;
+  late File _image;
+  bool simg = false;
   selectImage() async {
     final img = ImagePicker();
-    final imageFile = await img.getImage(source: ImageSource.gallery);
-    if (imageFile != null) {
-      image = imageFile.path.toString() as File;
+    final imageFile =
+        await img.pickImage(source: ImageSource.gallery, imageQuality: 50);
+    setState(() {
+      simg = true;
+      _image = File(imageFile!.path);
+    });
+  }
+
+  //Upload Image in Firebase Storage
+  Future<String> uploadFile(File image) async {
+    String URL;
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child("ProfileImg")
+        .child("profile_img_" + user!.uid.toString() + ".jpg");
+    await ref.putFile(image);
+    URL = await ref.getDownloadURL();
+    return URL;
+  }
+
+  //update users data profile
+  Future<void> updateData() async {
+    try {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      );
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user!.uid)
+          .update({
+        'fname': fnamecontrol.text,
+        'lname': lnamecontrol.text,
+        'mobile': mobilecontrol.text,
+        'reffer': reffercontrol.text,
+      });
+      Navigator.of(context).pop();
+      msg('Data SuccessFully Updated !');
+    } catch (e) {
+      print(e);
     }
+  }
+
+  Future<void> addImgData() async {
+    try {
+      if (simg == true) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        );
+        String URL = await uploadFile(_image);
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(user!.uid)
+            .update({'profileimg': URL});
+        Navigator.of(context).pop();
+        msg('Image Updated !');
+      } else {
+        msg('Please Select Image First !');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> msg(String msg) {
+    return showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Thank You"),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[Text(msg)],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+                onPressed: () => Navigator.of(context).pop(), child: Text("OK"))
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -91,16 +181,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     fontWeight: FontWeight.bold,
                     letterSpacing: 4),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 50),
-                child: IconButton(
-                  onPressed: () {
-                    selectImage();
-                  },
-                  icon: Icon(CupertinoIcons.camera_circle_fill),
-                  iconSize: 35,
-                ),
-              ),
             ],
           ),
         ),
@@ -130,12 +210,19 @@ class _UpdateProfileState extends State<UpdateProfile> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    IconButton(
+                      onPressed: () {
+                        selectImage();
+                      },
+                      icon: Icon(CupertinoIcons.camera_circle_fill),
+                      iconSize: 35,
+                    ),
                     Container(
                       width: 70,
                       height: 70,
                       decoration: BoxDecoration(
                           gradient: LinearGradient(
-                              colors: [c2, Colors.blue],
+                              colors: [Colors.yellowAccent, Colors.lightGreen],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight),
                           boxShadow: [
@@ -148,6 +235,22 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           ],
                           border: Border.all(color: Colors.white, width: 2),
                           borderRadius: BorderRadius.circular(50)),
+                      child: simg
+                          ? CircleAvatar(backgroundImage: FileImage(_image))
+                          : Center(
+                              child: Text(
+                                "?",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 22),
+                              ),
+                            ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        addImgData();
+                      },
+                      icon: Icon(Icons.cloud_upload_rounded),
+                      iconSize: 35,
                     ),
                   ],
                 ),
@@ -362,7 +465,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     children: [
                       InkWell(
                         onTap: () {
-                          selectImage();
+                          updateData();
                         },
                         child: Container(
                           width: 100,
@@ -370,8 +473,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           decoration: BoxDecoration(
                               gradient: LinearGradient(
                                   colors: [
-                                    Colors.amberAccent,
-                                    Colors.lightGreen
+                                    Colors.orangeAccent,
+                                    Colors.pinkAccent
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight),

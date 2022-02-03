@@ -76,7 +76,7 @@ class _UserProfileState extends State<UserProfile> {
                             end: Alignment.bottomRight),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black12,
+                            color: Colors.black26,
                             offset: Offset(0, 0),
                             blurRadius: 10,
                             spreadRadius: 0,
@@ -84,6 +84,22 @@ class _UserProfileState extends State<UserProfile> {
                         ],
                         border: Border.all(color: Colors.white, width: 2),
                         borderRadius: BorderRadius.circular(50)),
+                    child:StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(user!.uid)
+                              .snapshots(),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                                if (!snapshot.hasData) {
+                                  return CircleAvatar(backgroundColor: Colors.transparent,);
+                                }
+                                return CircleAvatar(
+                                      backgroundColor: Colors.transparent,
+                                      backgroundImage: NetworkImage(snapshot.data['profileimg']),
+                                    );
+                                },
+                          ),
                   ),
                 ],
               ),
@@ -323,7 +339,7 @@ class _UserProfileState extends State<UserProfile> {
                             borderRadius: BorderRadius.circular(30)),
                         child: Center(
                           child: Text(
-                            "Update",
+                            "EDIT",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
