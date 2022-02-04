@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:quick_shop/widget/app_bar.dart';
+import 'package:quick_shop/widget/app_body.dart';
 import 'package:quick_shop/widget/app_drawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,6 +20,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: MyAppBar(),
+      body: MyAppBody(),
       drawer: MyAppDrawer(),
     );
   }

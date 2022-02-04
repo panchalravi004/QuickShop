@@ -107,8 +107,8 @@ class _MyAppDrawerState extends State<MyAppDrawer> {
                           },
                         ):Text(subtitle,style: TextStyle(color: Colors.white,)),
                       trailing: Container(
-                        width: 60,
-                        height: 60,
+                        width: 55,
+                        height: 55,
                         decoration: BoxDecoration(
                             color: Colors.orange[100],
                             border: Border.all(
