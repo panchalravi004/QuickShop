@@ -68,14 +68,19 @@ class _WhenLoginState extends State<WhenLogin> {
                 textScaleFactor: 1.1, style: TextStyle(color: Colors.red)),
           ),
         ),
-        ListTile(
-          leading: Icon(
-            Icons.category_outlined,
-            color: Colors.black,
-            size: 20,
+        InkWell(
+          onTap: () {
+            Navigator.of(context).pushNamed(MyRoutes.allCategory);
+          },
+          child: ListTile(
+            leading: Icon(
+              Icons.category_outlined,
+              color: Colors.black,
+              size: 20,
+            ),
+            title: Text("Category",
+                textScaleFactor: 1.1, style: TextStyle(color: Colors.black)),
           ),
-          title: Text("Category",
-              textScaleFactor: 1.1, style: TextStyle(color: Colors.black)),
         ),
         ListTile(
           leading: Icon(

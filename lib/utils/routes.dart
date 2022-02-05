@@ -3,4 +3,5 @@ class MyRoutes {
   static String homeroutes = "/home";
   static String profileroutes = "/profile";
   static String updateprofileroutes = "/updateprofile";
+  static String allCategory = "/categoryall";
 }
