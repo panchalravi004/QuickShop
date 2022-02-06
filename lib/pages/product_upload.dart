@@ -49,7 +49,7 @@ class _ProductUploadState extends State<ProductUpload> {
       },
     );
   }
-
+  int id = 1;
   Future<void> addProduct() async {
     try {
       showDialog(
@@ -72,28 +72,31 @@ class _ProductUploadState extends State<ProductUpload> {
       }).then((value) {
         Navigator.of(context).pop();
         msg('Product Upload');
+        id = id+1;
+        idctl.text = id.toString();
       });
     } catch (e) {
       print(e);
     }
   }
 
+  
   clear() {
-    idctl.clear();
     namectl.clear();
     descctl.clear();
     mrpctl.clear();
     actpctl.clear();
     salerctl.clear();
     imgctl.clear();
-    mainctl.clear();
     subctl.clear();
   }
 
   @override
   void initState() {
     super.initState();
-    mainctl.text = 'men';
+    idctl.text = id.toString();
+    mainctl.text = 'baby';
+    salerctl.text = 'Baby Shop';
   }
 
   @override
