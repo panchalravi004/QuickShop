@@ -82,14 +82,19 @@ class _WhenLoginState extends State<WhenLogin> {
                 textScaleFactor: 1.1, style: TextStyle(color: Colors.black)),
           ),
         ),
-        ListTile(
-          leading: Icon(
-            CupertinoIcons.bag,
-            color: Colors.black,
-            size: 20,
+        InkWell(
+          onTap: () {
+            Navigator.of(context).pushNamed(MyRoutes.productupload);
+          },
+          child: ListTile(
+            leading: Icon(
+              CupertinoIcons.bag,
+              color: Colors.black,
+              size: 20,
+            ),
+            title: Text("My Order's",
+                textScaleFactor: 1.1, style: TextStyle(color: Colors.black)),
           ),
-          title: Text("My Order's",
-              textScaleFactor: 1.1, style: TextStyle(color: Colors.black)),
         ),
         ListTile(
           leading: Icon(

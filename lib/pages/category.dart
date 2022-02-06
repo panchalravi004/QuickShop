@@ -52,9 +52,9 @@ class _CategoryAllState extends State<CategoryAll> {
                     spreadRadius: 10)
               ],
               gradient: LinearGradient(
-                  colors: [c1, c2],
+                  colors: [c4, c2],
                   begin: Alignment.topRight,
-                  end: Alignment.bottomLeft),
+                  end: Alignment.bottomCenter),
               borderRadius:
                   BorderRadius.only(bottomRight: Radius.elliptical(450, 310))),
           child: Column(

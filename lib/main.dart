@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:quick_shop/pages/category.dart';
 import 'package:quick_shop/pages/home_page.dart';
 import 'package:quick_shop/pages/login_page.dart';
+import 'package:quick_shop/pages/product_upload.dart';
 import 'package:quick_shop/pages/userpage/update_user_profile.dart';
 import 'package:quick_shop/pages/userpage/user_profile.dart';
 //import 'package:quick_shop/pages/wellcome.dart';
@@ -39,6 +40,7 @@ class QuickShop extends StatelessWidget {
               MyRoutes.profileroutes: (context) => const UserProfile(),
               MyRoutes.updateprofileroutes: (context) => const UpdateProfile(),
               MyRoutes.allCategory: (context) => const CategoryAll(),
+              MyRoutes.productupload: (context) => const ProductUpload(),
             },
           );
         }
