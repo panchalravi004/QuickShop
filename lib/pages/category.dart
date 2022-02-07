@@ -45,6 +45,14 @@ class _CategoryAllState extends State<CategoryAll> {
     'Electronics',
     'Sports'
   ];
+  List<String> titlevalue = [
+    'men',
+    'women',
+    'baby',
+    'furniture',
+    'electronics',
+    'sports'
+  ];
   List<dynamic> subcategory = [
     ['All', 'Top Wear', 'Bottom Wear', 'Foot Wear'],
     ['All', 'Top Wear', 'Bottom Wear', 'Foot Wear'],

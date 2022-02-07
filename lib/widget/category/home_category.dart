@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:quick_shop/Product/product_list.dart';
 
 class Category extends StatefulWidget {
   const Category({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class _CategoryState extends State<Category> {
   BoxDecoration decCard(var clr) {
     return BoxDecoration(color: clr, borderRadius: BorderRadius.circular(50));
   }
+
   List<String> title = [
     'Men',
     'Women',
@@ -21,6 +23,24 @@ class _CategoryState extends State<Category> {
     'Electronics',
     'Sports'
   ];
+  List<String> titlevalue = [
+    'men',
+    'women',
+    'baby',
+    'furniture',
+    'electronics',
+    'sports'
+  ];
+
+  List<dynamic> subcategory = [
+    ['All', 'Top Wear', 'Bottom Wear', 'Foot Wear'],
+    ['All', 'Top Wear', 'Bottom Wear', 'Foot Wear'],
+    ['All', 'Top Wear', 'Bottom Wear', 'Foot Wear'],
+    ['All', 'Sofa Set', 'Chair & Table', 'TV Table'],
+    ['All', 'Mobile Phone', 'Tablet', 'LED Tv', 'Watch', 'Ac / Fridge'],
+    ['All', 'Sports Wear', 'Foot Wear', 'Material', 'Sport Shoes', 'Watch'],
+  ];
+
   List<String> img = [
     'https://i.ibb.co/KKn5mGD/men.png',
     'https://i.ibb.co/kK7NccG/women.png',
@@ -38,6 +58,9 @@ class _CategoryState extends State<Category> {
     Colors.greenAccent
   ];
 
+  //when clicked on category that go with setting selected data
+  static late String main;
+  static late List sub;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -65,24 +88,48 @@ class _CategoryState extends State<Category> {
                         for (var i = 0; i < title.length; i++) ...[
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: SizedBox(
-                              height: 70,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 45,
-                                    height: 45,
-                                    decoration: decCard(bgcolor[i]),
-                                    child: Center(
-                                      child: Image(
-                                          width: 30,
-                                          height: 30,
-                                          image: NetworkImage(img[i])),
+                            child: InkWell(
+                              onTap: () {
+                                setState(() async {
+                                  main = titlevalue[i];
+                                  sub = subcategory[i];
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    },
+                                  );
+                                  await Future.delayed(Duration(seconds: 2));
+                                  Navigator.of(context).pop();
+                                  await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ProductList(
+                                            maincat: main, subcat: sub),
+                                      ));
+                                });
+                              },
+                              child: SizedBox(
+                                height: 70,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: 45,
+                                      height: 45,
+                                      decoration: decCard(bgcolor[i]),
+                                      child: Center(
+                                        child: Image(
+                                            width: 30,
+                                            height: 30,
+                                            image: NetworkImage(img[i])),
+                                      ),
                                     ),
-                                  ),
-                                  Text(title[i])
-                                ],
+                                    Text(title[i])
+                                  ],
+                                ),
                               ),
                             ),
                           ),

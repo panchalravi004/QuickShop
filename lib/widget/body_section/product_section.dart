@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:quick_shop/Product/product_list.dart';
 
 class ProductSection extends StatefulWidget {
   const ProductSection({Key? key}) : super(key: key);
@@ -29,6 +30,17 @@ class _ProductSectionState extends State<ProductSection> {
   final List category = ['men', 'women', 'baby'];
   final List title = ['Men Wear', 'Women Wear', 'Baby Wear'];
 
+  List<dynamic> subcategory = [
+    ['All', 'Top Wear', 'Bottom Wear', 'Foot Wear'],
+    ['All', 'Top Wear', 'Bottom Wear', 'Foot Wear'],
+    ['All', 'Top Wear', 'Bottom Wear', 'Foot Wear'],
+    ['All', 'Sofa Set', 'Chair & Table', 'TV Table'],
+    ['All', 'Mobile Phone', 'Tablet', 'LED Tv', 'Watch', 'Ac / Fridge'],
+    ['All', 'Sports Wear', 'Foot Wear', 'Material', 'Sport Shoes', 'Watch'],
+  ];
+  static late String main;
+  static late List sub;
+
   Stream<QuerySnapshot<Object?>> cateStream(String cate) {
     final Stream<QuerySnapshot> menstream =
         FirebaseFirestore.instance.collection(cate).snapshots();
@@ -40,8 +52,8 @@ class _ProductSectionState extends State<ProductSection> {
         color: Colors.white, borderRadius: BorderRadius.circular(7));
   }
 
-  String name = '';
   String showname(var n) {
+    String name = '';
     if (n.toString().length > 15) {
       name = n[0] +
           n[1] +
@@ -89,19 +101,43 @@ class _ProductSectionState extends State<ProductSection> {
                       ),
                     ),
                     SizedBox(width: 165),
-                    Container(
-                      alignment: Alignment.centerRight,
-                      width: 100,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          color: Colors.greenAccent[700],
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Center(
-                        child: Text(
-                          'Show All',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
+                    InkWell(
+                      onTap: () {
+                        setState(() async {
+                          main = category[i];
+                          sub = subcategory[i];
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                          );
+                          await Future.delayed(Duration(seconds: 2));
+                          Navigator.of(context).pop();
+                          await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ProductList(maincat: main, subcat: sub),
+                              ));
+                        });
+                      },
+                      child: Container(
+                        alignment: Alignment.centerRight,
+                        width: 100,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            color: Colors.greenAccent[700],
+                            borderRadius: BorderRadius.circular(30)),
+                        child: Center(
+                          child: Text(
+                            'Show All',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
