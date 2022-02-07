@@ -3,14 +3,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class MenSection extends StatefulWidget {
-  const MenSection({Key? key}) : super(key: key);
+class ProductSection extends StatefulWidget {
+  const ProductSection({Key? key}) : super(key: key);
 
   @override
-  _MenSectionState createState() => _MenSectionState();
+  _ProductSectionState createState() => _ProductSectionState();
 }
 
-class _MenSectionState extends State<MenSection> {
+class _ProductSectionState extends State<ProductSection> {
   final Stream<QuerySnapshot> menstream =
       FirebaseFirestore.instance.collection('men').snapshots();
 
@@ -116,7 +116,12 @@ class _MenSectionState extends State<MenSection> {
                       }
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(
-                          child: CircularProgressIndicator(),
+                          child: SizedBox(
+                            height: 250,
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
                         );
                       }
                       //get data

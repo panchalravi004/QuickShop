@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:quick_shop/widget/category/home_category.dart';
-import 'package:quick_shop/widget/body_section/men_section.dart';
+import 'package:quick_shop/widget/body_section/product_section.dart';
 
 class MyAppBody extends StatefulWidget {
   const MyAppBody({Key? key}) : super(key: key);
@@ -25,10 +25,15 @@ class _MyAppBodyState extends State<MyAppBody> {
               Category(), //show category
               Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 32),
                   child: Container(
-                      height: 2, color: Colors.deepPurpleAccent[100])),
-              MenSection(),
+                      height: 1.5,
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [Colors.purple, Colors.pink],
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft)))),
+              ProductSection()
             ],
           ),
         ),
