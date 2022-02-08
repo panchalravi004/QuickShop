@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, import_of_legacy_library_into_null_safe, invalid_return_type_for_catch_error
+// ignore_for_file: prefer_const_constructors, import_of_legacy_library_into_null_safe, invalid_return_type_for_catch_error, avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +60,8 @@ class _ProductUploadState extends State<ProductUpload> {
           );
         },
       );
-      FirebaseFirestore.instance.collection(mainctl.text.toString()).doc().set({
+      var now = DateTime.now();
+      FirebaseFirestore.instance.collection(mainctl.text.toString()).doc(now.toString()).set({
         'id': idctl.text.toString(),
         'name': namectl.text.toString(),
         'desc': descctl.text.toString(),
@@ -95,8 +96,6 @@ class _ProductUploadState extends State<ProductUpload> {
   void initState() {
     super.initState();
     idctl.text = id.toString();
-    mainctl.text = 'baby';
-    salerctl.text = 'Baby Shop';
   }
 
   @override
