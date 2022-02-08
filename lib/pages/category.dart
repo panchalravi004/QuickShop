@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:quick_shop/Product/product_list.dart';
 
 class CategoryAll extends StatefulWidget {
   const CategoryAll({Key? key}) : super(key: key);
@@ -54,14 +55,15 @@ class _CategoryAllState extends State<CategoryAll> {
     'sports'
   ];
   List<dynamic> subcategory = [
-    ['All', 'Top Wear', 'Bottom Wear', 'Foot Wear'],
-    ['All', 'Top Wear', 'Bottom Wear', 'Foot Wear'],
-    ['All', 'Top Wear', 'Bottom Wear', 'Foot Wear'],
-    ['All', 'Sofa Set', 'Chair & Table', 'TV Table'],
-    ['All', 'Mobile Phone', 'Tablet', 'LED Tv', 'Watch', 'Ac / Fridge'],
-    ['All', 'Sports Wear', 'Foot Wear', 'Material', 'Sport Shoes', 'Watch'],
+    ['All', 'TopWear', 'BottomWear', 'FootWear'],
+    ['All', 'TopWear', 'BottomWear', 'FootWear'],
+    ['All', 'TopWear', 'BottomWear', 'FootWear'],
+    ['All', 'SofaSet', 'Chair&Table', 'TVTable'],
+    ['All', 'MobilePhone', 'Tablet', 'LEDTv', 'Watch', 'Ac/Fridge'],
+    ['All', 'SportsWear', 'FootWear', 'Material', 'SportShoes', 'Watch'],
   ];
-
+  static late String main;
+  static late List sub;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -203,10 +205,37 @@ class _CategoryAllState extends State<CategoryAll> {
                                   ),
                                 ),
                                 SizedBox(width: 240),
-                                Icon(
-                                  Icons.chevron_right_rounded,
-                                  size: 35,
-                                  color: Colors.white,
+                                InkWell(
+                                  onTap: () async {
+                                    main = titlevalue[i];
+                                    sub = subcategory[i];
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      },
+                                    );
+                                    await Future.delayed(Duration(seconds: 2));
+                                    Navigator.of(context).pop();
+                                    setState(() {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => ProductList(
+                                              maincat: main,
+                                              subcat: sub,
+                                              selected: 'all',
+                                            ),
+                                          ));
+                                    });
+                                  },
+                                  child: Icon(
+                                    Icons.chevron_right_rounded,
+                                    size: 35,
+                                    color: Colors.white,
+                                  ),
                                 )
                               ],
                             ),
@@ -223,25 +252,55 @@ class _CategoryAllState extends State<CategoryAll> {
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8),
-                                        child: Container(
-                                          height: 30,
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              border: Border.all(
-                                                  width: 1,
-                                                  color: Colors.black26),
-                                              borderRadius:
-                                                  BorderRadius.circular(25)),
-                                          child: Center(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 6),
-                                              child: Text(
-                                                subcategory[i][j],
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                        child: InkWell(
+                                          onTap: () async {
+                                            main = titlevalue[i];
+                                            sub = subcategory[i];
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                );
+                                              },
+                                            );
+                                            await Future.delayed(
+                                                Duration(seconds: 2));
+                                            Navigator.of(context).pop();
+                                            setState(() {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ProductList(
+                                                      maincat: main,
+                                                      subcat: sub,
+                                                      selected: subcategory[i][j],
+                                                    ),
+                                                  ));
+                                            });
+                                          },
+                                          child: Container(
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                border: Border.all(
+                                                    width: 1,
+                                                    color: Colors.black26),
+                                                borderRadius:
+                                                    BorderRadius.circular(25)),
+                                            child: Center(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 6),
+                                                child: Text(
+                                                  subcategory[i][j],
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
                                               ),
                                             ),
                                           ),

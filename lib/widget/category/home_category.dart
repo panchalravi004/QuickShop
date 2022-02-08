@@ -33,12 +33,12 @@ class _CategoryState extends State<Category> {
   ];
 
   List<dynamic> subcategory = [
-    ['All', 'Top Wear', 'Bottom Wear', 'Foot Wear'],
-    ['All', 'Top Wear', 'Bottom Wear', 'Foot Wear'],
-    ['All', 'Top Wear', 'Bottom Wear', 'Foot Wear'],
-    ['All', 'Sofa Set', 'Chair & Table', 'TV Table'],
-    ['All', 'Mobile Phone', 'Tablet', 'LED Tv', 'Watch', 'Ac / Fridge'],
-    ['All', 'Sports Wear', 'Foot Wear', 'Material', 'Sport Shoes', 'Watch'],
+    ['All', 'TopWear', 'BottomWear', 'FootWear'],
+    ['All', 'TopWear', 'BottomWear', 'FootWear'],
+    ['All', 'TopWear', 'BottomWear', 'FootWear'],
+    ['All', 'SofaSet', 'Chair&Table', 'TVTable'],
+    ['All', 'MobilePhone', 'Tablet', 'LEDTv', 'Watch', 'Ac/Fridge'],
+    ['All', 'SportsWear', 'Foot Wear', 'Material', 'SportShoes', 'Watch'],
   ];
 
   List<String> img = [
@@ -89,8 +89,7 @@ class _CategoryState extends State<Category> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: InkWell(
-                              onTap: () {
-                                setState(() async {
+                              onTap: () async {
                                   main = titlevalue[i];
                                   sub = subcategory[i];
                                   showDialog(
@@ -103,11 +102,12 @@ class _CategoryState extends State<Category> {
                                   );
                                   await Future.delayed(Duration(seconds: 2));
                                   Navigator.of(context).pop();
-                                  await Navigator.push(
+                                setState(() {
+                                  Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => ProductList(
-                                            maincat: main, subcat: sub),
+                                            maincat: main, subcat: sub, selected: 'all',),
                                       ));
                                 });
                               },

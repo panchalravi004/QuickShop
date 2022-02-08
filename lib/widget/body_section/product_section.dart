@@ -31,12 +31,12 @@ class _ProductSectionState extends State<ProductSection> {
   final List title = ['Men Wear', 'Women Wear', 'Baby Wear'];
 
   List<dynamic> subcategory = [
-    ['All', 'Top Wear', 'Bottom Wear', 'Foot Wear'],
-    ['All', 'Top Wear', 'Bottom Wear', 'Foot Wear'],
-    ['All', 'Top Wear', 'Bottom Wear', 'Foot Wear'],
-    ['All', 'Sofa Set', 'Chair & Table', 'TV Table'],
-    ['All', 'Mobile Phone', 'Tablet', 'LED Tv', 'Watch', 'Ac / Fridge'],
-    ['All', 'Sports Wear', 'Foot Wear', 'Material', 'Sport Shoes', 'Watch'],
+    ['All', 'TopWear', 'BottomWear', 'FootWear'],
+    ['All', 'TopWear', 'BottomWear', 'FootWear'],
+    ['All', 'TopWear', 'BottomWear', 'FootWear'],
+    ['All', 'SofaSet', 'Chair&Table', 'TVTable'],
+    ['All', 'MobilePhone', 'Tablet', 'LEDTv', 'Watch', 'Ac/Fridge'],
+    ['All', 'SportsWear', 'FootWear', 'Material', 'SportShoes', 'Watch'],
   ];
   static late String main;
   static late List sub;
@@ -52,29 +52,15 @@ class _ProductSectionState extends State<ProductSection> {
         color: Colors.white, borderRadius: BorderRadius.circular(7));
   }
 
-  String showname(var n) {
-    String name = '';
-    if (n.toString().length > 15) {
-      name = n[0] +
-          n[1] +
-          n[2] +
-          n[3] +
-          n[4] +
-          n[5] +
-          n[6] +
-          n[7] +
-          n[8] +
-          n[9] +
-          n[10] +
-          n[11] +
-          n[12] +
-          n[13] +
-          n[14] +
-          n[15] +
-          '...';
-      return name;
+  String showname(String n) {
+    String d = '';
+    if (n.length > 15) {
+      for (var i = 0; i < 15; i++) {
+        d = d + n[i];
+      }
+      return d + '...';
     }
-    return n;
+    return n + '..';
   }
 
   var one;
@@ -120,7 +106,7 @@ class _ProductSectionState extends State<ProductSection> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    ProductList(maincat: main, subcat: sub),
+                                    ProductList(maincat: main, subcat: sub, selected: 'all',),
                               ));
                         });
                       },
