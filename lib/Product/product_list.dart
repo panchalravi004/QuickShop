@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:quick_shop/Product/product_view.dart';
 
 class ProductList extends StatefulWidget {
   final String maincat;
@@ -64,7 +65,7 @@ class _ProductListState extends State<ProductList> {
               bottomRight: Radius.circular(25),
             ),
             gradient: LinearGradient(
-                colors: [c1, c2],
+                colors: [c2, c1],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight),
           ),
@@ -216,148 +217,176 @@ class _ProductListState extends State<ProductList> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Column(
                         children: [
-                          for (var i = 0; i < data.length; i++) ...[
+                          for (var i = data.length - 1; i > 0; i--) ...[
                             if (data[i]['subcategory'] == selectcategory ||
                                 selectcategory == 'all') ...[
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 8),
-                                child: Container(
-                                  height: 150,
-                                  decoration: BoxDecoration(
-                                      // color: Colors.white,
-                                      gradient: LinearGradient(
-                                          colors: [
-                                            Colors.white10,
-                                            Colors.white70,
-                                            Colors.white,
-                                            Colors.white
-                                          ],
-                                          begin: Alignment.centerLeft,
-                                          end: Alignment.centerRight),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.black12,
-                                            offset: Offset(0, 0),
-                                            blurRadius: 10,
-                                            spreadRadius: 0)
-                                      ],
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 140,
-                                        height: 140,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  color: Colors.black12,
-                                                  offset: Offset(0, 0),
-                                                  blurRadius: 5,
-                                                  spreadRadius: 0)
+                                child: InkWell(
+                                  onTap: () async {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      },
+                                    );
+                                    await Future.delayed(Duration(seconds: 2));
+                                    Navigator.of(context).pop();
+                                    setState(() {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => ProductView(
+                                              product: data[i],
+                                              maincat: widget.maincat,
+                                            ),
+                                          ));
+                                    });
+                                  },
+                                  child: Container(
+                                    height: 150,
+                                    decoration: BoxDecoration(
+                                        // color: Colors.white,
+                                        gradient: LinearGradient(
+                                            colors: [
+                                              Colors.white10,
+                                              Colors.white70,
+                                              Colors.white,
+                                              Colors.white
                                             ],
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Image(
-                                              image:
-                                                  NetworkImage(data[i]['img'])),
-                                        ),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Container(
-                                        width: 220,
-                                        height: 140,
-                                        decoration: BoxDecoration(
-                                            color: Colors.transparent,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 6),
-                                                child: Row(
-                                                  children: [
-                                                    SizedBox(
-                                                      width: 150,
-                                                      child: Text(
-                                                        ShowStr(data[i]['name'],
-                                                            12),
-                                                        style: TextStyle(
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w600),
-                                                      ),
-                                                    ),
-                                                    SizedBox(width: 20),
-                                                    Icon(CupertinoIcons.heart)
-                                                  ],
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 6),
-                                                child: Text(
-                                                  ShowStr(data[i]['desc'], 25),
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      color: Colors.black54),
-                                                ),
-                                              ),
-                                              Text(
-                                                  'Saler : ' +
-                                                      data[i]['salername'],
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.black54)),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 10,
-                                                        horizontal: 2),
-                                                child: Row(
-                                                  children: [
-                                                    SizedBox(
-                                                      width: 100,
-                                                      child: Text(
-                                                        'Rs.' +
-                                                            data[i]
-                                                                ['saleprice'],
-                                                        style: TextStyle(
-                                                            fontSize: 20,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w600),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      'MRP ' + data[i]['mrp'],
-                                                      style: TextStyle(
-                                                          color: Colors.black38,
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                    )
-                                                  ],
-                                                ),
-                                              )
-                                            ],
+                                            begin: Alignment.centerLeft,
+                                            end: Alignment.centerRight),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.black12,
+                                              offset: Offset(0, 0),
+                                              blurRadius: 10,
+                                              spreadRadius: 0)
+                                        ],
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 140,
+                                          height: 140,
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    color: Colors.black12,
+                                                    offset: Offset(0, 0),
+                                                    blurRadius: 5,
+                                                    spreadRadius: 0)
+                                              ],
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Image(
+                                                image: NetworkImage(
+                                                    data[i]['img'])),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(width: 10),
+                                        Container(
+                                          width: 220,
+                                          height: 140,
+                                          decoration: BoxDecoration(
+                                              color: Colors.transparent,
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 5),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 6),
+                                                  child: Row(
+                                                    children: [
+                                                      SizedBox(
+                                                        width: 150,
+                                                        child: Text(
+                                                          ShowStr(
+                                                              data[i]['name'],
+                                                              12),
+                                                          style: TextStyle(
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 20),
+                                                      Icon(CupertinoIcons.heart)
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 6),
+                                                  child: Text(
+                                                    ShowStr(
+                                                        data[i]['desc'], 25),
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        color: Colors.black54),
+                                                  ),
+                                                ),
+                                                Text(
+                                                    'Saler : ' +
+                                                        data[i]['salername'],
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: Colors.black54)),
+                                                Padding(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      vertical: 10,
+                                                      horizontal: 2),
+                                                  child: Row(
+                                                    children: [
+                                                      SizedBox(
+                                                        width: 100,
+                                                        child: Text(
+                                                          'Rs.' +
+                                                              data[i]
+                                                                  ['saleprice'],
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        'MRP ' + data[i]['mrp'],
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.black38,
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                      )
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               )

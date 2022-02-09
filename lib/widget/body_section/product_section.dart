@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_shop/Product/product_list.dart';
+import 'package:quick_shop/Product/product_view.dart';
 
 class ProductSection extends StatefulWidget {
   const ProductSection({Key? key}) : super(key: key);
@@ -65,6 +66,30 @@ class _ProductSectionState extends State<ProductSection> {
 
   var one;
   var two;
+
+  goto(Map a, String b) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+    await Future.delayed(Duration(seconds: 2));
+    Navigator.of(context).pop();
+    setState(() {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductView(
+              product: a,
+              maincat: b,
+            ),
+          ));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -105,8 +130,11 @@ class _ProductSectionState extends State<ProductSection> {
                           await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    ProductList(maincat: main, subcat: sub, selected: 'all',),
+                                builder: (context) => ProductList(
+                                  maincat: main,
+                                  subcat: sub,
+                                  selected: 'all',
+                                ),
                               ));
                         });
                       },
@@ -194,77 +222,105 @@ class _ProductSectionState extends State<ProductSection> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Container(
-                                          width: 115,
-                                          height: 120,
-                                          decoration: myDec(),
-                                          child: Column(
-                                            children: [
-                                              Image(
-                                                  height: 80,
-                                                  image: NetworkImage(
-                                                      mendata[0]['img'])),
-                                              Text(showname(mendata[0]['name']),
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500)),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                      'Rs.' +
-                                                          mendata[0]
-                                                              ['saleprice'],
-                                                      style: TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w700)),
-                                                  SizedBox(width: 10),
-                                                  Text(mendata[0]['mrp'],
-                                                      style: TextStyle(
-                                                          fontSize: 10))
-                                                ],
-                                              )
-                                            ],
+                                        InkWell(
+                                          onTap: () {
+                                            goto(mendata[mendata.length - 1],
+                                                category[i]);
+                                          },
+                                          child: Container(
+                                            width: 115,
+                                            height: 120,
+                                            decoration: myDec(),
+                                            child: Column(
+                                              children: [
+                                                Image(
+                                                    height: 80,
+                                                    image: NetworkImage(mendata[
+                                                            mendata.length - 1]
+                                                        ['img'])),
+                                                Text(
+                                                    showname(mendata[
+                                                            mendata.length - 1]
+                                                        ['name']),
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w500)),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                        'Rs.' +
+                                                            mendata[mendata
+                                                                    .length -
+                                                                1]['saleprice'],
+                                                        style: TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w700)),
+                                                    SizedBox(width: 10),
+                                                    Text(
+                                                        mendata[mendata.length -
+                                                            1]['mrp'],
+                                                        style: TextStyle(
+                                                            fontSize: 10))
+                                                  ],
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ),
                                         SizedBox(width: 8),
-                                        Container(
-                                          width: 115,
-                                          height: 120,
-                                          decoration: myDec(),
-                                          child: Column(
-                                            children: [
-                                              Image(
-                                                  height: 80,
-                                                  image: NetworkImage(
-                                                      mendata[1]['img'])),
-                                              Text(showname(mendata[1]['name']),
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500)),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                      'Rs.' +
-                                                          mendata[1]
-                                                              ['saleprice'],
-                                                      style: TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w700)),
-                                                  SizedBox(width: 10),
-                                                  Text(mendata[1]['mrp'],
-                                                      style: TextStyle(
-                                                          fontSize: 10))
-                                                ],
-                                              )
-                                            ],
+                                        InkWell(
+                                          onTap: () {
+                                            goto(mendata[mendata.length - 2],
+                                                category[i]);
+                                          },
+                                          child: Container(
+                                            width: 115,
+                                            height: 120,
+                                            decoration: myDec(),
+                                            child: Column(
+                                              children: [
+                                                Image(
+                                                    height: 80,
+                                                    image: NetworkImage(mendata[
+                                                            mendata.length - 2]
+                                                        ['img'])),
+                                                Text(
+                                                    showname(mendata[
+                                                            mendata.length - 2]
+                                                        ['name']),
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w500)),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                        'Rs.' +
+                                                            mendata[mendata
+                                                                    .length -
+                                                                2]['saleprice'],
+                                                        style: TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w700)),
+                                                    SizedBox(width: 10),
+                                                    Text(
+                                                        mendata[mendata.length -
+                                                            2]['mrp'],
+                                                        style: TextStyle(
+                                                            fontSize: 10))
+                                                  ],
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         )
                                       ],
@@ -274,77 +330,105 @@ class _ProductSectionState extends State<ProductSection> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Container(
-                                          width: 115,
-                                          height: 120,
-                                          decoration: myDec(),
-                                          child: Column(
-                                            children: [
-                                              Image(
-                                                  height: 80,
-                                                  image: NetworkImage(
-                                                      mendata[2]['img'])),
-                                              Text(showname(mendata[2]['name']),
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500)),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                      'Rs.' +
-                                                          mendata[2]
-                                                              ['saleprice'],
-                                                      style: TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w700)),
-                                                  SizedBox(width: 10),
-                                                  Text(mendata[2]['mrp'],
-                                                      style: TextStyle(
-                                                          fontSize: 10))
-                                                ],
-                                              )
-                                            ],
+                                        InkWell(
+                                          onTap: () {
+                                            goto(mendata[mendata.length - 3],
+                                                category[i]);
+                                          },
+                                          child: Container(
+                                            width: 115,
+                                            height: 120,
+                                            decoration: myDec(),
+                                            child: Column(
+                                              children: [
+                                                Image(
+                                                    height: 80,
+                                                    image: NetworkImage(mendata[
+                                                            mendata.length - 3]
+                                                        ['img'])),
+                                                Text(
+                                                    showname(mendata[
+                                                            mendata.length - 3]
+                                                        ['name']),
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w500)),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                        'Rs.' +
+                                                            mendata[mendata
+                                                                    .length -
+                                                                3]['saleprice'],
+                                                        style: TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w700)),
+                                                    SizedBox(width: 10),
+                                                    Text(
+                                                        mendata[mendata.length -
+                                                            3]['mrp'],
+                                                        style: TextStyle(
+                                                            fontSize: 10))
+                                                  ],
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ),
                                         SizedBox(width: 8),
-                                        Container(
-                                          width: 115,
-                                          height: 120,
-                                          decoration: myDec(),
-                                          child: Column(
-                                            children: [
-                                              Image(
-                                                  height: 80,
-                                                  image: NetworkImage(
-                                                      mendata[3]['img'])),
-                                              Text(showname(mendata[3]['name']),
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500)),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                      'Rs.' +
-                                                          mendata[3]
-                                                              ['saleprice'],
-                                                      style: TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w700)),
-                                                  SizedBox(width: 10),
-                                                  Text(mendata[3]['mrp'],
-                                                      style: TextStyle(
-                                                          fontSize: 10))
-                                                ],
-                                              )
-                                            ],
+                                        InkWell(
+                                          onTap: () {
+                                            goto(mendata[mendata.length - 4],
+                                                category[i]);
+                                          },
+                                          child: Container(
+                                            width: 115,
+                                            height: 120,
+                                            decoration: myDec(),
+                                            child: Column(
+                                              children: [
+                                                Image(
+                                                    height: 80,
+                                                    image: NetworkImage(mendata[
+                                                            mendata.length - 4]
+                                                        ['img'])),
+                                                Text(
+                                                    showname(mendata[
+                                                            mendata.length - 4]
+                                                        ['name']),
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w500)),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                        'Rs.' +
+                                                            mendata[mendata
+                                                                    .length -
+                                                                4]['saleprice'],
+                                                        style: TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w700)),
+                                                    SizedBox(width: 10),
+                                                    Text(
+                                                        mendata[mendata.length -
+                                                            4]['mrp'],
+                                                        style: TextStyle(
+                                                            fontSize: 10))
+                                                  ],
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         )
                                       ],
@@ -353,38 +437,55 @@ class _ProductSectionState extends State<ProductSection> {
                                 ),
                               ),
                               SizedBox(width: 5),
-                              Container(
-                                width: 125,
-                                height: 250,
-                                decoration: myDec(),
-                                child: Column(
-                                  children: [
-                                    Image(
-                                        height: 155,
-                                        image: NetworkImage(mendata[4]['img'])),
-                                    SizedBox(height: 5),
-                                    Text(showname(mendata[4]['name']),
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w500)),
-                                    SizedBox(height: 5),
-                                    Text(mendata[4]['salername'],
-                                        style: TextStyle(fontSize: 10)),
-                                    SizedBox(height: 5),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text('Rs.' + mendata[4]['saleprice'],
-                                            style: TextStyle(
-                                                fontSize: 24,
-                                                fontWeight: FontWeight.w700)),
-                                        SizedBox(width: 10),
-                                        Text(mendata[4]['mrp'],
-                                            style: TextStyle(fontSize: 10))
-                                      ],
-                                    )
-                                  ],
+                              InkWell(
+                                onTap: () {
+                                  goto(
+                                      mendata[mendata.length - 5], category[i]);
+                                },
+                                child: Container(
+                                  width: 125,
+                                  height: 250,
+                                  decoration: myDec(),
+                                  child: Column(
+                                    children: [
+                                      Image(
+                                          height: 155,
+                                          image: NetworkImage(
+                                              mendata[mendata.length - 5]
+                                                  ['img'])),
+                                      SizedBox(height: 5),
+                                      Text(
+                                          showname(mendata[mendata.length - 5]
+                                              ['name']),
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500)),
+                                      SizedBox(height: 5),
+                                      Text(
+                                          mendata[mendata.length - 5]
+                                              ['salername'],
+                                          style: TextStyle(fontSize: 10)),
+                                      SizedBox(height: 5),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                              'Rs.' +
+                                                  mendata[mendata.length - 5]
+                                                      ['saleprice'],
+                                              style: TextStyle(
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.w700)),
+                                          SizedBox(width: 10),
+                                          Text(
+                                              mendata[mendata.length - 5]
+                                                  ['mrp'],
+                                              style: TextStyle(fontSize: 10))
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
