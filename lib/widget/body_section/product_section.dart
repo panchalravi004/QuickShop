@@ -113,20 +113,20 @@ class _ProductSectionState extends State<ProductSection> {
                     ),
                     SizedBox(width: 165),
                     InkWell(
-                      onTap: () {
-                        setState(() async {
-                          main = category[i];
-                          sub = subcategory[i];
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            },
-                          );
+                      onTap: () async {
+                        main = category[i];
+                        sub = subcategory[i];
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
+                        );
                           await Future.delayed(Duration(seconds: 2));
                           Navigator.of(context).pop();
+                        setState(() async {
                           await Navigator.push(
                               context,
                               MaterialPageRoute(

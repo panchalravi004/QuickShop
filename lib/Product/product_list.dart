@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print, non_constant_identifier_names
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print, non_constant_identifier_names, invalid_return_type_for_catch_error, unused_local_variable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_shop/Product/product_view.dart';
@@ -220,175 +221,12 @@ class _ProductListState extends State<ProductList> {
                           for (var i = data.length - 1; i > 0; i--) ...[
                             if (data[i]['subcategory'] == selectcategory ||
                                 selectcategory == 'all') ...[
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8),
-                                child: InkWell(
-                                  onTap: () async {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return Center(
-                                          child: CircularProgressIndicator(),
-                                        );
-                                      },
-                                    );
-                                    await Future.delayed(Duration(seconds: 2));
-                                    Navigator.of(context).pop();
-                                    setState(() {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => ProductView(
-                                              product: data[i],
-                                              maincat: widget.maincat,
-                                            ),
-                                          ));
-                                    });
-                                  },
-                                  child: Container(
-                                    height: 150,
-                                    decoration: BoxDecoration(
-                                        // color: Colors.white,
-                                        gradient: LinearGradient(
-                                            colors: [
-                                              Colors.white10,
-                                              Colors.white70,
-                                              Colors.white,
-                                              Colors.white
-                                            ],
-                                            begin: Alignment.centerLeft,
-                                            end: Alignment.centerRight),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: Colors.black12,
-                                              offset: Offset(0, 0),
-                                              blurRadius: 10,
-                                              spreadRadius: 0)
-                                        ],
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: 140,
-                                          height: 140,
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    color: Colors.black12,
-                                                    offset: Offset(0, 0),
-                                                    blurRadius: 5,
-                                                    spreadRadius: 0)
-                                              ],
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Image(
-                                                image: NetworkImage(
-                                                    data[i]['img'])),
-                                          ),
-                                        ),
-                                        SizedBox(width: 10),
-                                        Container(
-                                          width: 220,
-                                          height: 140,
-                                          decoration: BoxDecoration(
-                                              color: Colors.transparent,
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 5),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(vertical: 6),
-                                                  child: Row(
-                                                    children: [
-                                                      SizedBox(
-                                                        width: 150,
-                                                        child: Text(
-                                                          ShowStr(
-                                                              data[i]['name'],
-                                                              12),
-                                                          style: TextStyle(
-                                                              fontSize: 18,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width: 20),
-                                                      Icon(CupertinoIcons.heart)
-                                                    ],
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(vertical: 6),
-                                                  child: Text(
-                                                    ShowStr(
-                                                        data[i]['desc'], 25),
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        color: Colors.black54),
-                                                  ),
-                                                ),
-                                                Text(
-                                                    'Saler : ' +
-                                                        data[i]['salername'],
-                                                    style: TextStyle(
-                                                        fontSize: 16,
-                                                        color: Colors.black54)),
-                                                Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      vertical: 10,
-                                                      horizontal: 2),
-                                                  child: Row(
-                                                    children: [
-                                                      SizedBox(
-                                                        width: 100,
-                                                        child: Text(
-                                                          'Rs.' +
-                                                              data[i]
-                                                                  ['saleprice'],
-                                                          style: TextStyle(
-                                                              fontSize: 20,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        'MRP ' + data[i]['mrp'],
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.black38,
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w600),
-                                                      )
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                              Product(
+                                maincat: widget.maincat,
+                                subcat: widget.subcat,
+                                selected: widget.selected,
+                                data: data,
+                                i: i,
                               )
                             ]
                           ]
@@ -399,6 +237,180 @@ class _ProductListState extends State<ProductList> {
                 ),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Product extends StatefulWidget {
+  final String maincat;
+  final List subcat;
+  final String selected;
+  final List data;
+  final int i;
+  const Product(
+      {Key? key,
+      required this.maincat,
+      required this.subcat,
+      required this.selected,
+      required this.data,
+      required this.i})
+      : super(key: key);
+
+  @override
+  _ProductState createState() => _ProductState();
+}
+
+class _ProductState extends State<Product> {
+  String ShowStr(String n, int l) {
+    String d = '';
+    if (n.length > l) {
+      for (var i = 0; i < l; i++) {
+        d = d + n[i];
+      }
+      return d + '...';
+    }
+    return n + '..';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: InkWell(
+        onTap: () async {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          );
+          await Future.delayed(Duration(seconds: 2));
+          Navigator.of(context).pop();
+          setState(() {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProductView(
+                    product: widget.data[widget.i],
+                    maincat: widget.maincat,
+                  ),
+                ));
+          });
+        },
+        child: Container(
+          height: 150,
+          decoration: BoxDecoration(
+              // color: Colors.white,
+              gradient: LinearGradient(colors: [
+                Colors.white10,
+                Colors.white70,
+                Colors.white,
+                Colors.white
+              ], begin: Alignment.centerLeft, end: Alignment.centerRight),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black12,
+                    offset: Offset(0, 0),
+                    blurRadius: 10,
+                    spreadRadius: 0)
+              ],
+              borderRadius: BorderRadius.circular(10)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 140,
+                height: 140,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black12,
+                          offset: Offset(0, 0),
+                          blurRadius: 5,
+                          spreadRadius: 0)
+                    ],
+                    borderRadius: BorderRadius.circular(10)),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child:
+                      Image(image: NetworkImage(widget.data[widget.i]['img'])),
+                ),
+              ),
+              SizedBox(width: 10),
+              Container(
+                width: 220,
+                height: 140,
+                decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 0),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 150,
+                              child: Text(
+                                ShowStr(widget.data[widget.i]['name'], 12),
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            IconButton(
+                                onPressed: () {},
+                                icon: Icon(CupertinoIcons.heart))
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        child: Text(
+                          ShowStr(widget.data[widget.i]['desc'], 25),
+                          style: TextStyle(fontSize: 15, color: Colors.black54),
+                        ),
+                      ),
+                      Text('Saler : ' + widget.data[widget.i]['salername'],
+                          style:
+                              TextStyle(fontSize: 16, color: Colors.black54)),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 2),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 100,
+                              child: Text(
+                                'Rs.' + widget.data[widget.i]['saleprice'],
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                            Text(
+                              'MRP ' + widget.data[widget.i]['mrp'],
+                              style: TextStyle(
+                                  color: Colors.black38,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

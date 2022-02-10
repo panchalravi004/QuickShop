@@ -504,7 +504,7 @@ class _ProductViewState extends State<ProductView> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) => ProductView(
-                                              product: data[i + 1],
+                                              product: data[i - 1],
                                               maincat: widget.maincat,
                                             ),
                                           ));
