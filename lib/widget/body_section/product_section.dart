@@ -162,7 +162,7 @@ class _ProductSectionState extends State<ProductSection> {
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasError) {
-                        print('Something Wrong !');
+                        print('Something Wrong !'+snapshot.error.toString());
                       }
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(
